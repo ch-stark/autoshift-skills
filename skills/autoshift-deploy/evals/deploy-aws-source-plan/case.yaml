@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: deploy-aws-source-plan
+expected_outcome: |
+  A step-by-step plan for a connected AWS hub, ACM before GitOps, correct profile and cluster set step, no cluster commands run.

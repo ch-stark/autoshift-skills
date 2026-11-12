@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: deploy-nothing-installs
+expected_outcome: |
+  Explains that the policies live in policies-<application name>, not open-cluster-policies, diagnoses the missing cluster set assignment as the likely cause, and gives the read-only check and the fix.

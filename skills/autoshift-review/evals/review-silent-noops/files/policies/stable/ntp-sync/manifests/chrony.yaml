@@ -1,0 +1,38 @@
+object-templates-raw: |
+  {{hub- if eq (index .ManagedClusterLabels "autoshift.io/ntp-sync" | default "false") "true" hub}}
+  {{hub- $cm := (lookup "v1" "ConfigMap" .PolicyMetadata.namespace (printf "%s.rendered-config" .ManagedClusterName)) | default dict hub}}
+  {{hub- $cfg := (index ($cm.data | default dict) "config" | default "" | fromYaml | default dict) hub}}
+  {{hub- $ntp := (index $cfg "ntp-sync" | default dict) hub}}
+  {{hub- $servers := (index $ntp "servers" | default list) hub}}
+  {{hub- $chrony := "" hub}}
+  {{hub- range $s := $servers hub}}{{hub- $chrony = printf "%sserver %s iburst\n" $chrony $s hub}}{{hub- end hub}}
+  - complianceType: musthave
+    objectDefinition:
+      apiVersion: machineconfiguration.openshift.io/v1
+      kind: MachineConfig
+      metadata:
+        name: 99-worker-chrony
+        labels:
+          machineconfiguration.openshift.io/role: worker
+      spec:
+        config:
+          ignition:
+            version: 3.2.0
+          storage:
+            files:
+              {{hub- if $servers hub}}
+              - path: /etc/chrony.conf
+                mode: 420
+                overwrite: true
+                contents:
+                  source: 'data:text/plain;charset=utf-8;base64,{{hub $chrony | b64enc hub}}'
+              {{hub- end hub}}
+  - complianceType: musthave
+    objectDefinition:
+      apiVersion: machineconfiguration.openshift.io/v1
+      kind: MachineConfig
+      metadata:
+        name: 99-worker-chrony
+        labels:
+          autoshift.io/managed-by: ntp-sync
+  {{hub- end hub}}

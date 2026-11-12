@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: review-defaults-and-deps
+expected_outcome: |
+  Flags that | default true turns an explicit suspend false into true, that | default 3 turns
+  keepTagRevisions 0 into 3, and that the dependency on policy-image-registry-storage stays Pending
+  forever on clusters where that policy is not placed, because the two placements use different labels.
+context:
+  scaffold_script: place-files.sh

@@ -1,0 +1,15 @@
+[
+  {"query": "add the Loki operator to autoshift, it should install on hubs and managed clusters when autoshift.io/loki is true", "should_trigger": true},
+  {"query": "can autoshift set up chrony on all my worker nodes? we need ntp servers configurable per clusterset", "should_trigger": true},
+  {"query": "I need a new policy that creates a MachineConfigPool for gpu nodes, gated on a label. where do I start in the autoshiftv2 repo?", "should_trigger": true},
+  {"query": "extend the quay policy so admins can set the registry storage size from config instead of it being fixed", "should_trigger": true},
+  {"query": "add a readiness check so policy-gitlab-instance waits until the operator CSV succeeds", "should_trigger": true},
+  {"query": "we want autoshift to manage the cluster-wide proxy config, add that", "should_trigger": true},
+  {"query": "new label autoshift.io/compliance-profile with values cis, stig or none, each placing different scan policies", "should_trigger": true},
+  {"query": "review the loki operator policy I just added to autoshift", "should_trigger": false},
+  {"query": "install autoshift on my bare metal SNO hub", "should_trigger": false},
+  {"query": "write a helm chart for our internal app, nothing to do with ACM", "should_trigger": false},
+  {"query": "install the loki operator on this cluster right now with oc, I just need it running for a test", "should_trigger": false},
+  {"query": "how does the cluster-labels policy stamp labels onto managed clusters?", "should_trigger": false},
+  {"query": "add a unit test for the stripStringDefaults function in tools/internal/resolver", "should_trigger": false}
+]

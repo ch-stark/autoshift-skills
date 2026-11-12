@@ -1,0 +1,21 @@
+object-templates-raw: |
+  {{hub- $cfg := (fromConfigMap .PolicyMetadata.namespace (printf "%s.rendered-config" .ManagedClusterName) "config" | fromYaml | default dict) hub}}
+  {{hub- $b := (index $cfg "console-banner" | default dict) hub}}
+  {{hub- if not (hasKey $b "text") hub}}{{hub fail "config.console-banner.text is not set; add it under config.console-banner in the cluster set values" hub}}{{hub- end hub}}
+  {{hub- $text := (index $b "text" | toString | trimPrefix " " | replace "'" "''") hub}}
+  {{hub- $links := (compact (list (index $b "linkUrl" | default ""))) hub}}
+  # One banner per cluster, owned outright, so removed fields are pruned.
+  - complianceType: mustonlyhave
+    objectDefinition:
+      apiVersion: console.openshift.io/v1
+      kind: ConsoleNotification
+      metadata:
+        name: autoshift-banner
+      spec:
+        text: '{{hub $text hub}}'
+        location: BannerTop
+        {{hub- if $links hub}}
+        link:
+          href: '{{hub first $links hub}}'
+          text: Details
+        {{hub- end hub}}

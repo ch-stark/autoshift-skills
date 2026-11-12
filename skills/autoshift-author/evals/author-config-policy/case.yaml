@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: author-config-policy
+expected_outcome: |
+  Scaffolds with the generator, declares label and config in _example.yaml, fails loudly on missing servers, runs make test and reports the result honestly.
+context:
+  scaffold_script: place-files.sh

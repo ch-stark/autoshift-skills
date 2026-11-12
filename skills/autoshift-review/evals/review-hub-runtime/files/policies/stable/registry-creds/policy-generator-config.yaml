@@ -1,0 +1,22 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: registry-creds
+policyDefaults:
+  namespace: ${POLICY_NAMESPACE}
+  remediationAction: ${REMEDIATION}
+  severity: medium
+  evaluationInterval:
+    compliant: ${EVAL_COMPLIANT}
+    noncompliant: ${EVAL_NONCOMPLIANT}
+policies:
+  - name: policy-registry-creds
+    manifests:
+      - path: manifests
+    placement:
+      labelSelector:
+        matchExpressions:
+          - key: autoshift.io/registry-creds
+            operator: In
+            values:
+              - 'true'

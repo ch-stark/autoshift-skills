@@ -1,0 +1,17 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: ntp-sync
+policyDefaults:
+  namespace: ${POLICY_NAMESPACE}
+  remediationAction: ${REMEDIATION}
+  severity: medium
+  evaluationInterval:
+    compliant: ${EVAL_COMPLIANT}
+    noncompliant: ${EVAL_NONCOMPLIANT}
+  placement:
+    placementPath: placement.yaml
+policies:
+  - name: policy-ntp-sync-chrony
+    manifests:
+      - path: manifests

@@ -1,0 +1,6 @@
+# The Red Hat Advanced Cluster Management release these skills describe, and the source it was read
+# from. tests/validate.py checks every reference to it; tests/acm_drift.py compares it with another
+# release. Change it only with `make acm-drift REF=release-<x.y> UPDATE=1`.
+acm: '2.17'
+releaseBranch: release-2.17
+goTemplateUtils: v7.2.0

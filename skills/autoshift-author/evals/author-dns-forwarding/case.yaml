@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: author-dns-forwarding
+expected_outcome: |
+  Writes spec.servers on the DNS default CR with mustonlyhave and a read-modify-write of the live spec,
+  so a removed zone disappears and the existing tolerations and other fields survive, without adding
+  a second template for the same DNS object.
+context:
+  scaffold_script: place-files.sh

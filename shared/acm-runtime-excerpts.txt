@@ -1,0 +1,60 @@
+### propagator controllers/propagator/propagation.go (Context variables: the hub context fields)
+type templateCtx struct {
+ManagedClusterName string
+ManagedClusterLabels map[string]string
+PolicyMetadata map[string]any
+}
+
+### propagator controllers/propagator/propagation.go (Context variables: .PolicyMetadata keys)
+templateContext := templateCtx{
+ManagedClusterName: clusterName,
+PolicyMetadata: map[string]any{
+"annotations": rootPlc.Annotations,
+"labels": rootPlc.Labels,
+"name": rootPlc.Name,
+"namespace": rootPlc.Namespace,
+},
+}
+
+### propagator controllers/propagator/propagation.go (Context variables: .ManagedClusterLabels is populated only when the text names it)
+if strings.Contains(string(policyT.ObjectDefinition.Raw), "ManagedClusterLabels") {
+templateResolverOptions.ContextTransformers = append(
+templateResolverOptions.ContextTransformers, addManagedClusterLabels(clusterName),
+)
+}
+
+### propagator controllers/propagator/propagation.go (Hub lookup restrictions)
+func (r *ReplicatedPolicyReconciler) getTemplateResolverOpts(
+
+### config-policy-controller controllers/configurationpolicy_utils.go (ACM functions: skipObject)
+resolveOptions.CustomFunctions = map[string]any{
+"skipObject": func(skips ...any) (empty string, err error) {
+switch len(skips) {
+case 0:
+skipObject = true
+case 1:
+if !skipObject {
+if skip, ok := skips[0].(bool); ok {
+skipObject = skip
+} else {
+err = fmt.Errorf(
+"expected boolean but received '%v'", skips[0])
+}
+}
+default:
+err = fmt.Errorf(
+"expected one optional boolean argument but received %d arguments", len(skips))
+}
+
+return empty, err
+},
+}
+
+### config-policy-controller controllers/configurationpolicy_controller.go (Two engines: customMessage function set)
+tmpl, err := template.New("custom-msg").Funcs(commonSprigFuncMap).Parse(customTemplate)
+
+### config-policy-controller controllers/configurationpolicy_controller.go (Two engines: customMessage data)
+templateData := map[string]any{
+"DefaultMessage": defaultMessage,
+"Policy": plcMap,
+}

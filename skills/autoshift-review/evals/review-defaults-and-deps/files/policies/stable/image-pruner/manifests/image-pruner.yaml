@@ -1,0 +1,14 @@
+object-templates-raw: |
+  {{hub- $cfg := (fromConfigMap .PolicyMetadata.namespace (printf "%s.rendered-config" .ManagedClusterName) "config" | fromYaml) hub}}
+  {{hub- $c := (index $cfg "image-pruner" | default dict) hub}}
+  {{hub- if not (hasKey $c "schedule") hub}}{{hub fail "config.image-pruner.schedule is not set" hub}}{{hub- end hub}}
+  - complianceType: musthave
+    objectDefinition:
+      apiVersion: imageregistry.operator.openshift.io/v1
+      kind: ImagePruner
+      metadata:
+        name: cluster
+      spec:
+        schedule: {{hub index $c "schedule" | quote hub}}
+        suspend: {{hub index $c "suspend" | default true hub}}
+        keepTagRevisions: {{hub index $c "keepTagRevisions" | default 3 hub}}

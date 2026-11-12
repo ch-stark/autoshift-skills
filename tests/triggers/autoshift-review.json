@@ -1,0 +1,15 @@
+[
+  {"query": "can you review my branch feature/odf-dr before I open the PR? it changes policies/stable/odf-dr and adds a couple of labels to _example.yaml", "should_trigger": true},
+  {"query": "look over this diff for policy-quay-deploy, I switched the components list to object-templates-raw and want to know if anything will silently break on the hub", "should_trigger": true},
+  {"query": "review PR 252 in auto-shift/autoshiftv2", "should_trigger": true},
+  {"query": "I changed the gitops-agent hub template to lookup ManagedClusters across all namespaces, make test passes. anything wrong with it?", "should_trigger": true},
+  {"query": "sanity check my uncommitted changes under policies/certified/gitlab, especially the musthave on the secrets", "should_trigger": true},
+  {"query": "does this ConfigurationPolicy look right to you? it is in policies/stable/metallb/manifests/ipaddresspool.yaml and uses {{hub fromSecret ... | base64dec hub}}", "should_trigger": true},
+  {"query": "code review the last 3 commits on this autoshift branch", "should_trigger": true},
+  {"query": "add an operator policy for the Loki operator to autoshift", "should_trigger": false},
+  {"query": "deploy autoshift to my new aws hub, I just ran oc login", "should_trigger": false},
+  {"query": "review this python script that parses our jira export, it's in ~/scripts/jira_dump.py", "should_trigger": false},
+  {"query": "why is policy-acs-operator-install NonCompliant on local-cluster right now? check the cluster", "should_trigger": false},
+  {"query": "review my ansible role for configuring RHEL hosts, it's under roles/rhel_base", "should_trigger": false},
+  {"query": "explain how hub templates differ from managed cluster templates in ACM", "should_trigger": false}
+]

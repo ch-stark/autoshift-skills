@@ -1,0 +1,7 @@
+*-workspace/
+shared/*.tsv.new
+**/evals/results/
+.DS_Store
+__pycache__/
+.eval-kubeconfig
+.acm-src/

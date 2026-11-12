@@ -1,0 +1,25 @@
+object-templates-raw: |
+  {{hub- $clusters := (lookup "cluster.open-cluster-management.io/v1" "ManagedCluster" "" "").items hub}}
+  {{hub- $user := (fromSecret "registry-creds" "pull-creds" "username" | base64dec) hub}}
+  {{- $tier := (index .ManagedClusterLabels "autoshift.io/registry-tier" | default "standard") }}
+  - complianceType: musthave
+    objectDefinition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: registry-mirror-settings
+        namespace: openshift-config
+      data:
+        user: '{{hub $user hub}}'
+        fleet-size: '{{hub len $clusters hub}}'
+        tier: '{{ $tier }}'
+  - complianceType: musthave
+    objectDefinition:
+      apiVersion: operator.openshift.io/v1
+      kind: IngressController
+      metadata:
+        name: default
+        namespace: openshift-ingress-operator
+      spec:
+        replicas: {{hub index .ManagedClusterLabels "autoshift.io/registry-router-replicas" | default "2" | toInt hub}}
+        httpEmptyRequestsPolicy: Respond

@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: author-hub-cluster-list
+expected_outcome: |
+  Reads the ManagedCluster list with a hub template lookup filtered by the cluster set label, sets
+  hubTemplateOptions.serviceAccountName on the policy entry because the lookup is cluster-scoped and
+  not the target's own ManagedCluster, and says make test cannot catch that restriction.
+context:
+  scaffold_script: place-files.sh

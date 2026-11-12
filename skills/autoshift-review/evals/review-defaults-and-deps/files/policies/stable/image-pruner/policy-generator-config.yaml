@@ -1,0 +1,26 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: image-pruner
+policyDefaults:
+  namespace: ${POLICY_NAMESPACE}
+  remediationAction: ${REMEDIATION}
+  severity: medium
+  consolidateManifests: true
+  evaluationInterval:
+    compliant: ${EVAL_COMPLIANT}
+    noncompliant: ${EVAL_NONCOMPLIANT}
+policies:
+  - name: policy-image-registry-storage
+    manifests:
+      - path: manifests/registry-storage.yaml
+    placement:
+      placementPath: placement-storage.yaml
+  - name: policy-image-pruner
+    dependencies:
+      - name: policy-image-registry-storage
+        compliance: Compliant
+    manifests:
+      - path: manifests/image-pruner.yaml
+    placement:
+      placementPath: placement.yaml

@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: deploy-disconnected-baremetal
+expected_outcome: |
+  Mirrored catalogs set in both bootstrap charts before bootstrap, a bare metal profile, config.disconnected values, credentials kept out of values.

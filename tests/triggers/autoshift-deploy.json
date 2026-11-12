@@ -1,0 +1,15 @@
+[
+  {"query": "I want to try autoshift on my sandbox cluster, I'm logged in with oc. walk me through it", "should_trigger": true},
+  {"query": "set up autoshift on a disconnected bare metal hub, we have a mirror registry at mirror.corp.example:8443", "should_trigger": true},
+  {"query": "how do I get autoshift running from the 1.4.0 OCI release on our prod hub?", "should_trigger": true},
+  {"query": "bootstrap ACM and gitops for autoshift, then install it with the hub profile", "should_trigger": true},
+  {"query": "I installed autoshift but nothing is installing on local-cluster, the app is synced. help me finish the setup", "should_trigger": true},
+  {"query": "we need a hub of hubs with two regional hubs running autoshift, help me stand it up", "should_trigger": true},
+  {"query": "demo autoshift to my customer tomorrow on a fresh 4.22 cluster, what do I run?", "should_trigger": true},
+  {"query": "add a new operator policy for cert-utils to autoshift", "should_trigger": false},
+  {"query": "review my changes to autoshift/values/clustersets/hub.yaml", "should_trigger": false},
+  {"query": "deploy my spring boot app to openshift with a route", "should_trigger": false},
+  {"query": "install openshift 4.22 on aws with the installer, ipi", "should_trigger": false},
+  {"query": "why does the hub-of-hubs design use a separate policy namespace per instance?", "should_trigger": false},
+  {"query": "deploy argo cd on my cluster for my team's apps, not autoshift", "should_trigger": false}
+]

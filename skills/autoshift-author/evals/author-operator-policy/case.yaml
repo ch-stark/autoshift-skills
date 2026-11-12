@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: author-operator-policy
+expected_outcome: |
+  Uses generate-operator-policy.sh with the right flags, picks the catalog tier, says what is unverified without a cluster, keeps names consistent.
+context:
+  scaffold_script: place-files.sh

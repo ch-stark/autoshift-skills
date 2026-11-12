@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: review-hub-runtime
+expected_outcome: |
+  Flags the runtime-only defects that make test cannot catch: hub fromSecret decoded, labels read locally, restricted hub lookup, unquoted toInt.
+context:
+  scaffold_script: place-files.sh
