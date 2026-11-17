@@ -1,19 +1,34 @@
 ---
 name: autoshift-review
-description: Review a change to the AutoShift repository (OpenShift Day 2 configuration through Red Hat Advanced Cluster Management 2.17 policies and OpenShift GitOps) for bugs that generic review misses, such as musthave merge semantics, hub versus local template resolution, functions and lookups the 2.17 runtime does not allow, empty policies that report Compliant, and validation-suite blind spots. Use when asked to review, check or sanity-check a diff, branch, commit, pull request or a single policy file in an AutoShift checkout (policies/, autoshift/, components/, tools/, scripts/, docs/), including questions like "does this ConfigurationPolicy look right?" or "anything wrong with this hub template?".
+description: Use when reviewing AutoShift diffs or policy files for ACM defects. Excludes authoring, deployment and live cluster diagnosis.
 license: Apache-2.0
 compatibility: Built for the AutoShift repository. Uses git; helm, go and make if present to verify findings.
 metadata:
-  version: "0.1.0"
+  author: Ben Carr
+  version: "0.1.1"
+  tags: autoshift
 ---
 
 # AutoShift review
+
+## Purpose
+
+Review changes in an AutoShift checkout for Red Hat Advanced Cluster Management (ACM) 2.17
+policy defects that generic code review misses.
 
 Most AutoShift defects pass every gate. The policy renders, the validation suite is green, ACM
 reports Compliant, and nothing is applied. Review for that class of defect first. Style comes last,
 if at all.
 
-## Procedure
+## Prerequisites
+
+- An AutoShift checkout and Git, plus the diff, branch, commit, PR or policy file to review.
+- Helm, Go and Make for the verification steps that use them. If a tool is unavailable, report the
+  affected gate as skipped and keep unsupported findings under Worth discussing.
+- No live cluster access is needed for this review. Use repository files, renders and controller
+  source as evidence.
+
+## Instructions
 
 1. **Find the change.** Use the target the user gave (a PR number, branch, commit or path). With
    none, review `git diff $(git merge-base HEAD main)` plus uncommitted changes. Read each changed
@@ -123,6 +138,33 @@ Each line names the trap; the reference holds the mechanism and the fix.
 - Explanatory comments inside `object-templates-raw`, unless they narrate history (see prose rules).
 - Debug or scratch charts, at production severity.
 - Style preferences, in the same list as defects.
+
+## Examples
+
+- Review a branch: "Review my AutoShift branch before I open a PR; it changes policy manifests and
+  adds labels to the example values." Compare the branch with main, include uncommitted changes,
+  and load the template, runtime and repository references needed by the diff.
+- Review one policy: "Does this AutoShift ConfigurationPolicy use hub fromSecret correctly?"
+  Check the hub and local return values in the template references, then verify the rendered value
+  before reporting a defect.
+- Review a clean change: "Sanity-check this AutoShift console banner change." Apply the checklist
+  and say there are no confirmed findings when the evidence supports none.
+
+## Limitations
+
+This skill targets ACM 2.17 and the AutoShift repository conventions. It reviews changes; live
+cluster diagnosis and deployment need their own evidence and workflow. A green validation suite
+proves rendering and resolution, not enforcement or the absence of silent no-ops. Missing tools,
+repository context or controller source can leave a suspected defect unverified.
+
+## Troubleshooting
+
+- No review target supplied: use the default diff in step 1 of Instructions.
+- A validation command is unavailable or fails before checking policies: report the gate as skipped
+  or failed with the cause, and continue the file review with the evidence available.
+- A render fails near a hub delimiter: read the Reading failures section of
+  [validation-harness](references/validation-harness.md) to distinguish the hub error from the
+  downstream local-parser error.
 
 ## Report format
 
